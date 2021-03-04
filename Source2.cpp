@@ -90,85 +90,44 @@ const double Th = 232.04;
 const double Pa = 231.04;
 const double U = 238.03;
 
-bool checkuppercase(char a);
+bool checkupercase(char a);
 bool checknumber(char a);
-bool checklowercase(char a);
-int chartonum(char a);
 
 int main()
 {	
 	double total = 0;
-	int count, q, len;
-	char i1, i2, again;
+	int count, q;
+	char i1, i2;
 	bool up, up2, num;
 	string f;
 	do {
+		count = 1;
 		total = 0;
 		system("cls");
-		cout << "Enter the molecular formula" << endl;
+		cout << "Enter the molecular formula" << endl
 		cin >> f;
 		len = f.length();
-		for (int i = 0; i < len; i++)
+		for (i = 0; i <= len; i++)
 		{
-			up = checkuppercase(f[i]);
-			if (len >= i + 1)
-			{
-				up2 = checklowercase(f[i + 1]);
-			}
-			else
-				up2 = false;
+			up = checkupercase(f[i]);
+			up2 = !(checkupercase(f[i + 1]) && checknumber(f[i + 1]))
 			if (up2 == false)
 			{
-				if (len >= i + 1)
+				if (checknumber(f[i + 1]) == true)
 				{
-					if (checknumber(f[i + 1]) == true)
-					{
-						if (len >= i + 2)
-						{
-							if (checknumber(f[i + 2]) == true)
-							{
-								q = 10 * chartonum(f[i + 1]);
-								q += chartonum(f[i + 2]);
-							}
-							else
-								q = chartonum(f[i + 1]);
-						}
-						else
-							q = chartonum(f[i + 1]);
-					}
-					else q = 1;
-				}
-				else
-					q = 1;
-			}
-			else
-			{
-				if (len >= i + 2)
-				{
+					q = f[i + 1]-49;
 					if (checknumber(f[i + 2]) == true)
 					{
-						if (len >= i + 3)
-						{
-							if (checknumber(f[i + 3]) == true)
-							{
-								q = 10 * chartonum(f[i + 2]);
-								q += chartonum(f[i + 3]);
-							}
-							else
-								q = chartonum(f[i + 2]);
-						}
-						else
-							q = chartonum(f[i + 2]);
+						q += 10 * f[i + 2]-49;
 					}
-					else q = 1;
 				}
 				else
 					q = 1;
 			}
-			if (up == true && up2== true)
+			if (up == true && num == true)
 			{
 				i1 = f[i];
-				i2 = f[i+1];
+				i2 = f[i2];
 				switch (i1)
 				{
 				case 'A':
@@ -487,10 +446,9 @@ int main()
 					}
 					break;
 				}
-			}
-			else if (up == true)
-			{
-				i1 = f[i];
+				else if (up == true)
+				{
+					i1 = f[i]
 					switch (i1)
 					{
 					case 'B':
@@ -536,16 +494,21 @@ int main()
 						total += q*Y;
 						break;
 					}
+				}
 			}
+
 		}
+
+		count++;
 		cout << "The molar mass is: " << total << endl;
 		cout << "Do you have any more molecules to find the molar mass of? (y/n): ";
-		cin >> again;
+			cin >> again;
 	}while (again == 'y' || again == 'Y');
 	return 0;
+	
 }
 
-bool checkuppercase(char a)
+bool checkupercase(char a)
 {
 	bool check;
 	switch (a)
@@ -557,7 +520,6 @@ bool checkuppercase(char a)
 		break;
 	default:
 		check = false;
-		break;
 	}
 	return check;
 }
@@ -575,28 +537,4 @@ bool checknumber(char a)
 		break;
 	}
 	return check;
-}
-
-bool checklowercase(char a)
-{
-	bool check;
-	switch (a)
-	{
-	case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h': case 'i':
-	case 'j': case 'k': case 'l': case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
-	case 's': case 't': case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
-		check = true;
-		break;
-	default:
-		check = false;
-		break;	
-	}
-	return check;
-}
-
-int chartonum(char a)
-{
-	int b = a;
-	b -= 48;
-	return b;
 }
